@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api/usuario', usuarioRoute);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.end('Hello World');
 });
 
 

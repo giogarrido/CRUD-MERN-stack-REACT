@@ -3,29 +3,30 @@ import UsuarioIndividual from './UsuarioIndividual';
 import axios from 'axios';
 function ListaUsuarios() {
   
-  const [datausuarios, setDataUsuarios] = useState([]);
+  const [datausuarios, setdatausuarios] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/usuario/obtenerusuarios').then((res) => {
+    axios.get('api/usuario/obtenerusuarios').then((res) => {
       console.log(res.data);
-      setDataUsuarios(res.data);
-    }).catch((err) => {
+      setdatausuarios(res.data);
+    }).catch(err => {
       console.log(err);
     })
   }, [])
 
   //Mapear lista de usuarios en objeto usuario
-  const listaUsuarios = datausuarios.map(usuario => {
-    return <UsuarioIndividual usuario={usuario}/>
+  const listausuarios = datausuarios.map(usuario => {
+    return(
+      <div>
+         <UsuarioIndividual usuario={usuario}/>
+      </div>
+    )
   });
-
-
-
 
   return ( 
     <div>
-      <h1>Lista de Usuarios</h1>
-      {listaUsuarios}
+      <h2>Lista de Usuarios</h2>
+      {listausuarios}
     </div>
   );
 }

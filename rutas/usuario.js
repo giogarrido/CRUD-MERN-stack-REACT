@@ -12,7 +12,6 @@ const usuarioSchema = new eschema({
 });
 
 const ModeloUsuario = mongoose.model('usuarios', usuarioSchema);
-
 module.exports = router;
 
 // agregar usuario
@@ -24,22 +23,63 @@ router.post('/agregarusuario', (req, res) => {
         idusuario: req.body.idusuario
     });
 
-    nuevoUsuario.save()
-    .then(data => {
-        res.json('Usuario agregado');
-    })
-    .catch(err => {
-        res.json(err);
+    nuevoUsuario.save(function(err){
+        if(!err) {
+            res.send('Usuario agregado correctamente');
+        } else {
+            res.send(err);
+        }
     });
 });
 
 // obtener usuarios
 router.get('/obtenerusuarios', (req, res) => {
-    ModeloUsuario.find()
-    .then(data => {
-        res.json(data);
-    })
-    .catch(err => {
-        res.json(err);
+    ModeloUsuario.find({}, function(docs, err){
+        if(!err) {
+            res.send(docs);
+        } else {
+            res.send(err);
+        }
     });
 });
+
+// obtener data de usuario
+router.post('/obtenerdatausuario', (req, res) => {
+    ModeloUsuario.find({idusuario:req.body.idusuario}, function (docs, err){
+        if(!err) {
+            res.send(docs);
+        } else {
+            res.send(err);
+        }
+    })
+
+});
+
+// actualizar usuario
+router.post('/actualizausuario', (req, res) => {
+    ModeloUsuario.findOneAndUpdate({
+        idusuario: req.body.idusuario
+    }, {
+        nombre: req.body.nombre,
+        email: req.body.email,
+        telefono: req.body.telefono
+    },(err) => {
+        if(!err) {
+            res.send('Usuario actualizado correctamente');
+        } else {
+            res.send(err);
+        }
+    });
+});
+
+//eliminar usuario
+router.post('/borrarusuario', (req, res) => {
+    ModeloUsuario.findOneAndDelete({idusuario:req.body.idusuario}, (err) => {
+        if(!err) {
+            res.send('Usuario eliminado correctamente');
+        } else {
+            res.send(err);
+        }
+    });
+}
+);

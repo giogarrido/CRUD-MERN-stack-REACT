@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <a className="navbar-brand" href="listausuario">
+          <a className="navbar-brand" href="/">
             CRUD MERN STACK REACT
           </a>
           <button
@@ -43,15 +43,15 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ListaUsuarios />} exact></Route>
+          <Route path="/" element={<ListaUsuarios/>} exact></Route>
           <Route
             path="/agregarusuario"
-            element={<AgregarUsuario />}
+            element={<AgregarUsuario/>}
             exact
           ></Route>
           <Route
-            path="/editarusuario/"
-            element={<EditarUsuario />}
+            path="/editarusuario/:idusuario"
+            element={<EditarUsuario/>}
             exact
           ></Route>
         </Routes>

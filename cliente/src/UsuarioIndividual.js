@@ -1,5 +1,19 @@
+import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
+
 function UsuarioIndividual({ usuario }) {
+
+  //funcion para borrar usuario
+  function borrarusuario(idusuario) {
+    axios.post("/api/usuario/borrarusuario", {idusuario:idusuario}).then((res) => {
+      console.log(res.data);
+      alert(res.data)
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
   return (
     <div className="container">
       <div className="row">
@@ -10,9 +24,11 @@ function UsuarioIndividual({ usuario }) {
             <li className="list-group-item">Email: {usuario.email}</li>
             <li className="list-group-item">Teléfono: {usuario.telefono}</li>
           </ul>
-          <button className="btn btn-success mt-3">Editar</button>
+          <Link to={`/editarusuario/${usuario.idusuario}`}>
+            <li className="btn btn-success mt-3">Editar</li>
+          </Link>
           &nbsp;
-          <button className="btn btn-danger mt-3">Borrar</button>
+          <button className="btn btn-danger mt-3" onClick={()=> borrarusuario(usuario.idusuario)}>Borrar</button>
           <hr className="mt-4"></hr>
         </div>
       </div>
