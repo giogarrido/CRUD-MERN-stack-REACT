@@ -1,14 +1,28 @@
 import axios from "axios";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import Swal from "sweetalert2";
+
 
 function UsuarioIndividual({ usuario }) {
+
+  const navegar = useNavigate();
+  
+  //Para animaciones
+  useEffect(() => {
+    AOS.init({ });
+  }, []);
+
+
 
   //funcion para borrar usuario
   function borrarusuario(idusuario) {
     axios.post("/api/usuario/borrarusuario", {idusuario:idusuario}).then((res) => {
       console.log(res.data);
-      alert(res.data)
+      Swal.fire('Felididades', 'El usuario se borro con éxito')
+      navegar(0)
     }).catch((err) => {
       console.log(err);
     });
@@ -17,7 +31,7 @@ function UsuarioIndividual({ usuario }) {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-6 offset-3">
+        <div className="col-sm-6 offset-3" data-aos="flip-right">
           <ul className="list-group">
             <li className="list-group-item">ID: {usuario.idusuario}</li>
             <li className="list-group-item">Nombre: {usuario.nombre}</li>

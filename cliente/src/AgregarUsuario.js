@@ -1,7 +1,13 @@
 import React,{useState} from "react";
 import uniqid from "uniqid";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+
 function AgregarUsuario() {
+
+  const navegar = useNavigate();
 
   //Hooks
   const [nombre, setNombre] = useState('');
@@ -20,7 +26,9 @@ function AgregarUsuario() {
 
     axios.post("/api/usuario/agregarusuario", usuario)
     .then(res => {
-      alert(res.data)
+      //alert(res.data)
+      Swal.fire('Felididades', 'El usuario se creó con éxito')
+      navegar('/')
     })
     .then(err => {
       console.log(err);

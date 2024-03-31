@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Swal from "sweetalert2"
 
 function EditarUsuario() {
 
@@ -11,6 +12,9 @@ function EditarUsuario() {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
+
+  //Para regresar a la pagina anterior
+  const navegar = useNavigate();
 
   useEffect(() => {
     axios.post('/api/usuario/obtenerdatausuario', {idusuario: params.idusuario }).then(res => {
@@ -34,7 +38,9 @@ function EditarUsuario() {
     axios.post("/api/usuario/actualizausuario", actualizausuario)
     .then(res => {
       console.log(res.data);
-      alert(res.data)
+      //alert(res.data)
+      Swal.fire('Felicidades', 'El usuario se actualizo con éxito')
+      navegar('/');
     })
     .then(err => {
       console.log(err);
